@@ -1,0 +1,1 @@
+{"version":3,"file":"database-service.module.js","sourceRoot":"","sources":["../../src/database-service/database-service.module.ts"],"names":[],"mappings":";;;;;;;;;AAAA,2CAAwC;AACxC,yEAAoE;AAM7D,IAAM,qBAAqB,GAA3B,MAAM,qBAAqB;CAAG,CAAA;AAAxB,sDAAqB;gCAArB,qBAAqB;IAJjC,IAAA,eAAM,EAAC;QACN,SAAS,EAAE,CAAC,iDAAsB,CAAC;QACnC,OAAO,EAAE,CAAC,iDAAsB,CAAC;KAClC,CAAC;GACW,qBAAqB,CAAG"}
