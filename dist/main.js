@@ -10,6 +10,7 @@ const os_1 = __importDefault(require("os"));
 const swagger_1 = require("@nestjs/swagger");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
+    app.enableCors();
     const PORT = 3000;
     const config = new swagger_1.DocumentBuilder()
         .setTitle('DCLink - A Decentralized Peer-to-Peer Network')

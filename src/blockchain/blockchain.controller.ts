@@ -21,7 +21,7 @@ export class BlockchainController {
                     blockNumber: 1,
                     timestamp: Date.now(),
                     merkleRoot: "",
-                    blockHash: "0x00000000000000000001",
+                    blockHash: "0x0000000000000000000",
                     previousBlockHash: "0x00000000000000000000",
                     validator: {
                         publicKey: "Chain",
@@ -38,7 +38,7 @@ export class BlockchainController {
                         "block": 1,
                         "timestamp": 1713952099817,
                         "transactionAction": "Transfer 10 DCL value to 04e4e622e9cf3d80809b503cbe126a5468268735aa63840a4ba48979c50fbcc54320a526a421606084c450fa280e14636a1f622fd0dc3c4beb9485895da892493e",
-                        "from": "",
+                        "from": "Chain",
                         "to": "04f50cad99720770f1d3065ae871d8d39415109c7090bb2fddcc3216b33e8b769b4b9881f3f0a862b2b97dbce3e37b4d64ba6bd4a3a5f5eef16f28ee3085107b77",
                         "value": 100,
                         "transactionFee": 0,
@@ -47,11 +47,11 @@ export class BlockchainController {
                         "signature": "0000000000000000000"
                     },
                     {
-                        "status": "pending",
+                        "status": "success",
                         "block": 1,
                         "timestamp": 1713952099817,
                         "transactionAction": "Transfer 10 DCL value to 04e4e622e9cf3d80809b503cbe126a5468268735aa63840a4ba48979c50fbcc54320a526a421606084c450fa280e14636a1f622fd0dc3c4beb9485895da892493e",
-                        "from": "",
+                        "from": "Chain",
                         "to": "04e4e622e9cf3d80809b503cbe126a5468268735aa63840a4ba48979c50fbcc54320a526a421606084c450fa280e14636a1f622fd0dc3c4beb9485895da892493e",
                         "value": 100,
                         "transactionFee": 0,
@@ -72,5 +72,10 @@ export class BlockchainController {
     @Get('transactions')
     async getAllTransaction() {
         return await this.blockchainService.printAllTransaction()
+    }
+
+    @Get('last')
+    async getLastBlock() {
+        return await this.blockchainService.getLastBlock()
     }
 }

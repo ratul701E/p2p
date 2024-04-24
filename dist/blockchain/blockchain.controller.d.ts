@@ -6,4 +6,5 @@ export declare class BlockchainController {
     addToBlockchain(): Promise<unknown>;
     getTotalTransaction(): Promise<number>;
     getAllTransaction(): Promise<any[]>;
+    getLastBlock(): Promise<unknown>;
 }
