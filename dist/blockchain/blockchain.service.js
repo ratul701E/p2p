@@ -44,6 +44,17 @@ let BlockchainService = class BlockchainService {
             }
             return count;
         };
+        this.printAllTransaction = async () => {
+            let all_transaction = [];
+            let full_chain = await this.printBlockchain(undefined);
+            let count = 0;
+            for (let block of full_chain) {
+                for (let transaction of block.transactions) {
+                    all_transaction.push(transaction);
+                }
+            }
+            return all_transaction;
+        };
         this.blockchain = databaseService.getBlockchainDBObject();
     }
     async addToBlockchain(block) {

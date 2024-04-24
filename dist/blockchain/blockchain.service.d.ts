@@ -7,4 +7,5 @@ export declare class BlockchainService {
     getLastBlock(): Promise<unknown>;
     printBlockchain: (numberOfInstances: number) => Promise<any>;
     printTotalTransactionCount: () => Promise<number>;
+    printAllTransaction: () => Promise<any[]>;
 }

@@ -5,4 +5,5 @@ export declare class BlockchainController {
     printBlockchain(numberOfInstances?: number): Promise<any>;
     addToBlockchain(): Promise<unknown>;
     getTotalTransaction(): Promise<number>;
+    getAllTransaction(): Promise<any[]>;
 }
