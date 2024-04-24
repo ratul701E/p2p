@@ -36,6 +36,14 @@ let BlockchainService = class BlockchainService {
                 });
             });
         };
+        this.printTotalTransactionCount = async () => {
+            let full_chain = await this.printBlockchain(undefined);
+            let count = 0;
+            for (let block of full_chain) {
+                count += block.transactions.length;
+            }
+            return count;
+        };
         this.blockchain = databaseService.getBlockchainDBObject();
     }
     async addToBlockchain(block) {

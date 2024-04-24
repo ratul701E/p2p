@@ -63,4 +63,9 @@ export class BlockchainController {
             }
         )
     }
+
+    @Get('total-transaction') 
+    async getTotalTransaction() {
+        return await this.blockchainService.printTotalTransactionCount()
+    }
 }

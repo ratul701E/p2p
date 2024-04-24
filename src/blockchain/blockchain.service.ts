@@ -37,7 +37,7 @@ export class BlockchainService {
 
     }
 
-    printBlockchain = async (numberOfInstances:number) => {
+    printBlockchain = async (numberOfInstances:number) : Promise<any> => {
 
         let blockchain = [];
         return new Promise((resolve, reject) => {
@@ -64,6 +64,15 @@ export class BlockchainService {
     
         });
     
+    }
+
+    printTotalTransactionCount = async () => {
+        let full_chain = await this.printBlockchain(undefined)
+        let count = 0
+        for(let block of full_chain) {
+            count += block.transactions.length
+        }
+        return count
     }
 
 }

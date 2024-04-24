@@ -70,6 +70,9 @@ let BlockchainController = class BlockchainController {
             ],
         });
     }
+    async getTotalTransaction() {
+        return await this.blockchainService.printTotalTransactionCount();
+    }
 };
 exports.BlockchainController = BlockchainController;
 __decorate([
@@ -86,6 +89,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], BlockchainController.prototype, "addToBlockchain", null);
+__decorate([
+    (0, common_1.Get)('total-transaction'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], BlockchainController.prototype, "getTotalTransaction", null);
 exports.BlockchainController = BlockchainController = __decorate([
     (0, swagger_1.ApiTags)("Blockchain"),
     (0, common_1.Controller)('blockchain'),
