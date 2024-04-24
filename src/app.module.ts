@@ -15,4 +15,5 @@ import { BlockchainModule } from './blockchain/blockchain.module';
   providers: [AppService],
   exports: [AppService]
 })
-export class AppModule {}
+export class AppModule {
+}

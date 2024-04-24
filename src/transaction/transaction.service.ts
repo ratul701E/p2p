@@ -69,7 +69,7 @@ export class TransactionService {
     deleteTransactionFromMempool = async (transaction: TransactionDTO) => {
 
         return new Promise((resolve, reject) => {
-
+            //console.log(transaction)
             let stream = this.mempool.createReadStream();
 
             stream.on('data', (data: any) => {

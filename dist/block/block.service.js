@@ -23,7 +23,7 @@ const blockchain_service_1 = require("../blockchain/blockchain.service");
 const main_1 = require("../main");
 const p2p_server_gateway_1 = require("../p2p-server/p2p-server.gateway");
 const GENERATION_DELAY = 10000;
-const MINIMUM_TRANSACTION_PER_BLOCK = 2;
+const MINIMUM_TRANSACTION_PER_BLOCK = 1;
 let BlockService = class BlockService {
     constructor(dbService, transactionService, p2pClientsService, blockchainService, p2pServerGateway) {
         this.dbService = dbService;
@@ -39,7 +39,7 @@ let BlockService = class BlockService {
         }, GENERATION_DELAY);
     }
     async genereateBlock() {
-        console.log("generating block ... ");
+        console.log("Status: Generating block ");
         const _mempool = await this.transactionService.printMempool();
         const valid_transactions = [];
         const last_block = await this.blockchainService.getLastBlock();
@@ -52,11 +52,12 @@ let BlockService = class BlockService {
             }
         }
         if (valid_transactions.length < MINIMUM_TRANSACTION_PER_BLOCK) {
-            console.log("Currently " +
-                valid_transactions.length +
-                " number of transactions are valid.");
-            console.log("Still " + (MINIMUM_TRANSACTION_PER_BLOCK - valid_transactions.length) + " transactions needed.");
+            console.log(`Result: Failed. Need ${MINIMUM_TRANSACTION_PER_BLOCK} valid transactions found ${valid_transactions.length}`);
+            console.log("--------------------------------------------------------");
             return;
+        }
+        else {
+            console.log(`Result: Ready for block creation. Valid Trasaction found:  ${valid_transactions.length}`);
         }
         for (let addr of node_addresses) {
             const req_addr = "http://" + addr + "/info";
@@ -89,11 +90,6 @@ let BlockService = class BlockService {
             transactions: [],
         };
         valid_transactions.forEach((transaction, index) => {
-            const transactionHash = crypto_1.default
-                .createHash("sha256")
-                .update(JSON.stringify(transaction))
-                .digest("hex");
-            transaction.transactionHash = transactionHash;
             transaction.block = blockWithTransactions.blockInfo.blockNumber;
             transaction.status = 'success';
             blockWithTransactions.transactions.push(transaction);
@@ -105,6 +101,16 @@ let BlockService = class BlockService {
             .update(JSON.stringify(blockWithTransactions.blockInfo))
             .digest("hex");
         blockWithTransactions.blockInfo.blockHash = blockHash;
+        await this.blockchainService.addToBlockchain(blockWithTransactions);
+        console.log("Block Status: Block created and added to the chain.");
+        console.log("Mempool cleanup: Cleaning . . .");
+        for (let transaction of valid_transactions) {
+            await this.transactionService.deleteTransactionFromMempool(transaction);
+        }
+        console.log("Mempool cleanup: Success");
+        this.p2pServerGateway.blockBroadcast(blockWithTransactions);
+        console.log("Broadcast: Successfully broadcasted to peers");
+        console.log("--------------------------------------------------------");
     }
     async buildMerkleTree(transactions) {
         if (transactions.length === 0) {

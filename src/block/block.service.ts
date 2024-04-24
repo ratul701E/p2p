@@ -12,7 +12,7 @@ import { getLocalIp } from "src/main";
 import { P2pGateway } from "src/p2p-server/p2p-server.gateway";
 
 const GENERATION_DELAY = 10000;
-const MINIMUM_TRANSACTION_PER_BLOCK = 2;
+const MINIMUM_TRANSACTION_PER_BLOCK = 1;
 
 @Injectable()
 export class BlockService implements OnModuleInit {
@@ -36,7 +36,7 @@ export class BlockService implements OnModuleInit {
   // -------------------------------- BLOCK GENERATION --------
 
   async genereateBlock() {
-    console.log("generating block ... ");
+    console.log("Status: Generating block ");
     //console.log(await this.transactionService.printMempool())
     const _mempool: any = await this.transactionService.printMempool();
 
@@ -56,16 +56,20 @@ export class BlockService implements OnModuleInit {
       }
     }
 
+    
+
+
     if (valid_transactions.length < MINIMUM_TRANSACTION_PER_BLOCK) {
-      console.log(
-        "Currently " +
-          valid_transactions.length +
-          " number of transactions are valid."
-      );
-      console.log(
-        "Still " + (MINIMUM_TRANSACTION_PER_BLOCK - valid_transactions.length) + " transactions needed."
-      );
+      
+      
+      console.log(`Result: Failed. Need ${MINIMUM_TRANSACTION_PER_BLOCK} valid transactions found ${valid_transactions.length}`)
+      console.log("--------------------------------------------------------")
       return;
+    }
+    else {
+      
+      
+      console.log(`Result: Ready for block creation. Valid Trasaction found:  ${valid_transactions.length}`)
     }
 
     for (let addr of node_addresses) {
@@ -110,11 +114,6 @@ export class BlockService implements OnModuleInit {
     };
 
     valid_transactions.forEach((transaction, index) => {
-      const transactionHash = crypto
-        .createHash("sha256")
-        .update(JSON.stringify(transaction))
-        .digest("hex");
-      transaction.transactionHash = transactionHash;
       transaction.block = blockWithTransactions.blockInfo.blockNumber
       transaction.status = 'success'
       blockWithTransactions.transactions.push(transaction);
@@ -138,11 +137,31 @@ export class BlockService implements OnModuleInit {
     //console.log(blockWithTransactions)
 
     //--------add to blockchain db
-    //this.blockchainService.addToBlockchain(blockWithTransactions)
+    await this.blockchainService.addToBlockchain(blockWithTransactions)
+    
+    
+    console.log("Block Status: Block created and added to the chain.")
+
+    //----------- delete transactions from mempool
+    
+    
+    console.log("Mempool cleanup: Cleaning . . .")
+    for(let transaction of valid_transactions) {
+      await this.transactionService.deleteTransactionFromMempool(transaction)
+    }
+    
+    
+    
+    console.log("Mempool cleanup: Success")
 
     //--------propagate
 
-    //this.p2pServerGateway.blockBroadcast(blockWithTransactions);
+    this.p2pServerGateway.blockBroadcast(blockWithTransactions);
+    
+    
+    console.log("Broadcast: Successfully broadcasted to peers")
+    
+    console.log("--------------------------------------------------------")
   }
 
   // -----------------------------------------

@@ -9,8 +9,8 @@ export class BlockchainController {
     ) {}
     @ApiOkResponse({description:"It will return the total blockchain"})
     @Get()
-    async printBlockchain(@Body('count', ParseIntPipe) numberOfInstances: number){
-        return await this.blockchainService.printBlockchain(numberOfInstances)
+    async printBlockchain(@Body('count') numberOfInstances?: number){
+        return await this.blockchainService.printBlockchain(numberOfInstances || undefined)
     }
 
     @Post()

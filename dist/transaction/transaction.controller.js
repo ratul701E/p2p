@@ -22,7 +22,6 @@ let TransactionController = class TransactionController {
         this.transactionService = transactionService;
     }
     async addTransactionToMempool(transaction) {
-        console.log(transaction);
         return await this.transactionService.addTransactionToMempool(transaction);
     }
     async getMempool() {

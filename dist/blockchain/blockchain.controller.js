@@ -21,7 +21,7 @@ let BlockchainController = class BlockchainController {
         this.blockchainService = blockchainService;
     }
     async printBlockchain(numberOfInstances) {
-        return await this.blockchainService.printBlockchain(numberOfInstances);
+        return await this.blockchainService.printBlockchain(numberOfInstances || undefined);
     }
     async addToBlockchain() {
         return await this.blockchainService.addToBlockchain({
@@ -75,7 +75,7 @@ exports.BlockchainController = BlockchainController;
 __decorate([
     (0, swagger_1.ApiOkResponse)({ description: "It will return the total blockchain" }),
     (0, common_1.Get)(),
-    __param(0, (0, common_1.Body)('count', common_1.ParseIntPipe)),
+    __param(0, (0, common_1.Body)('count')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
