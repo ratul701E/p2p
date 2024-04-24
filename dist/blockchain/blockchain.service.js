@@ -15,13 +15,25 @@ const database_service_service_1 = require("../database-service/database-service
 let BlockchainService = class BlockchainService {
     constructor(databaseService) {
         this.databaseService = databaseService;
-        this.printBlockchain = async () => {
+        this.printBlockchain = async (numberOfInstances) => {
             let blockchain = [];
             return new Promise((resolve, reject) => {
                 let stream = this.blockchain.createReadStream();
-                stream.on('data', (data) => { blockchain.push(JSON.parse(data.value)); });
-                stream.on('end', () => { resolve(blockchain); });
-                stream.on('error', (err) => { reject(err); });
+                let counter = 0;
+                stream.on('data', (data) => {
+                    blockchain.push(JSON.parse(data.value));
+                    counter++;
+                    if (numberOfInstances && counter >= numberOfInstances) {
+                        stream.destroy();
+                        resolve(blockchain.slice(-numberOfInstances));
+                    }
+                });
+                stream.on('end', () => {
+                    resolve(blockchain);
+                });
+                stream.on('error', (err) => {
+                    reject(err);
+                });
             });
         };
         this.blockchain = databaseService.getBlockchainDBObject();

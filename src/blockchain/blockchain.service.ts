@@ -37,18 +37,32 @@ export class BlockchainService {
 
     }
 
-    printBlockchain = async () => {
+    printBlockchain = async (numberOfInstances:number) => {
 
-        let blockchain = []
+        let blockchain = [];
         return new Promise((resolve, reject) => {
-
-            let stream = this.blockchain.createReadStream()
     
-            stream.on('data', (data: any) => { blockchain.push(JSON.parse(data.value)) })
-            stream.on('end', () => { resolve(blockchain) })
-            stream.on('error', (err: any) => { reject(err) })
+            let stream = this.blockchain.createReadStream();
+            let counter = 0;
     
-        })
+            stream.on('data', (data) => {
+                blockchain.push(JSON.parse(data.value));
+                counter++;
+                if (numberOfInstances && counter >= numberOfInstances) {
+                    stream.destroy();
+                    resolve(blockchain.slice(-numberOfInstances));
+                }
+            });
+    
+            stream.on('end', () => {
+                resolve(blockchain);
+            });
+    
+            stream.on('error', (err) => {
+                reject(err);
+            });
+    
+        });
     
     }
 

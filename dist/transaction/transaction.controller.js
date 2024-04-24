@@ -28,6 +28,14 @@ let TransactionController = class TransactionController {
     async getMempool() {
         return await this.transactionService.printMempool();
     }
+    async deleteTransaction(transaction) {
+        return await this.transactionService.deleteTransactionFromMempool(transaction);
+    }
+    async getBalance(address) {
+        return {
+            balance: await this.transactionService.getBalance(address),
+        };
+    }
 };
 exports.TransactionController = TransactionController;
 __decorate([
@@ -46,6 +54,20 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], TransactionController.prototype, "getMempool", null);
+__decorate([
+    (0, common_1.Delete)(),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [transaction_dto_1.TransactionDTO]),
+    __metadata("design:returntype", Promise)
+], TransactionController.prototype, "deleteTransaction", null);
+__decorate([
+    (0, common_1.Get)('/balance/:address'),
+    __param(0, (0, common_1.Param)('address')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], TransactionController.prototype, "getBalance", null);
 exports.TransactionController = TransactionController = __decorate([
     (0, swagger_1.ApiTags)("Transaction"),
     (0, common_1.Controller)('transaction'),

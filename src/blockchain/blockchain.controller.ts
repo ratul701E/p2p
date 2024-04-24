@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, ParseIntPipe, Post, ValidationPipe } from '@nestjs/common';
 import { BlockchainService } from './blockchain.service';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 @ApiTags("Blockchain")
@@ -9,59 +9,58 @@ export class BlockchainController {
     ) {}
     @ApiOkResponse({description:"It will return the total blockchain"})
     @Get()
-    async printBlockchain(){
-        return await this.blockchainService.printBlockchain()
+    async printBlockchain(@Body('count', ParseIntPipe) numberOfInstances: number){
+        return await this.blockchainService.printBlockchain(numberOfInstances)
     }
 
-    // @Post()
-    // async addToBlockchain(){
-    //     return await this.blockchainService.addToBlockchain(
-    //         {
-    //             blockInfo: {
-    //                 blockNumber: 1,
-    //                 timestamp: Date.now(),
-    //                 merkleRoot: "",
-    //                 blockHash: "0x00000000000000000001",
-    //                 previousBlockHash: "0x00000000000000000000",
-    //                 validator: {
-    //                     publicKey: "Chain",
-    //                     stakingBalance: 'null',
-    //                     validatorSignature: 'null',
-    //                 },
-    //                 proofOfStake: {
-    //                     stakingReward: 0,
-    //                     stakingDifficulty: 0,
-    //                 },
-    //             },
-    //             transactions: [
-    //                 {
-    //                     "status": "Success",
-    //                     "block": 0,
-    //                     "timestamp": 1708199920901,
-    //                     "transactionAction": "transfer 0.021782283137410064 DCL to 0x87b3f3C934A13C779e100a5d6E6d7ef577e86671",
-    //                     "from": "",
-    //                     "to": "0x222",
-    //                     "value": 100.021782283137410065,
-    //                     "transactionFee": 0.000383982410952,
-    //                     "gasPrice": 18.284876712,
-    //                     "transactionHash": "0x12345678",
-    //                     "signature": "2457u29567239865289572896517675798sf9186r91gbf"
-    //                   },
-    //                   {
-    //                     "status": "Success",
-    //                     "block": 0,
-    //                     "timestamp": 1708199920901,
-    //                     "transactionAction": "transfer 0.021782283137410064 DCL to 0x87b3f3C934A13C779e100a5d6E6d7ef577e86671",
-    //                     "from": "",
-    //                     "to": "0x111",
-    //                     "value": 200.021782283137410065,
-    //                     "transactionFee": 0.000383982410952,
-    //                     "gasPrice": 18.284876712,
-    //                     "transactionHash": "0x87654321",
-    //                     "signature": "2457u29567239865289572896517675798sf9186r91gbf"
-    //                   }
-    //             ],
-    //         }
-    //     )
-    // }
+    @Post()
+    async addToBlockchain(){
+        return await this.blockchainService.addToBlockchain(
+            {
+                blockInfo: {
+                    blockNumber: 1,
+                    timestamp: Date.now(),
+                    merkleRoot: "",
+                    blockHash: "0x00000000000000000001",
+                    previousBlockHash: "0x00000000000000000000",
+                    validator: {
+                        publicKey: "Chain",
+                        stakingBalance: 'null',
+                        validatorSignature: 'null',
+                    },
+                    proofOfStake: {
+                        stakingReward: 0,
+                    },
+                },
+                transactions: [
+                    {
+                        "status": "success",
+                        "block": 1,
+                        "timestamp": 1713952099817,
+                        "transactionAction": "Transfer 10 DCL value to 04e4e622e9cf3d80809b503cbe126a5468268735aa63840a4ba48979c50fbcc54320a526a421606084c450fa280e14636a1f622fd0dc3c4beb9485895da892493e",
+                        "from": "",
+                        "to": "04f50cad99720770f1d3065ae871d8d39415109c7090bb2fddcc3216b33e8b769b4b9881f3f0a862b2b97dbce3e37b4d64ba6bd4a3a5f5eef16f28ee3085107b77",
+                        "value": 100,
+                        "transactionFee": 0,
+                        "gasPrice": 0,
+                        "transactionHash": "0000000000000000000",
+                        "signature": "0000000000000000000"
+                    },
+                    {
+                        "status": "pending",
+                        "block": 1,
+                        "timestamp": 1713952099817,
+                        "transactionAction": "Transfer 10 DCL value to 04e4e622e9cf3d80809b503cbe126a5468268735aa63840a4ba48979c50fbcc54320a526a421606084c450fa280e14636a1f622fd0dc3c4beb9485895da892493e",
+                        "from": "",
+                        "to": "04e4e622e9cf3d80809b503cbe126a5468268735aa63840a4ba48979c50fbcc54320a526a421606084c450fa280e14636a1f622fd0dc3c4beb9485895da892493e",
+                        "value": 100,
+                        "transactionFee": 0,
+                        "gasPrice": 0,
+                        "transactionHash": "0000000000000000000",
+                        "signature": "0000000000000000000"
+                    }
+                ],
+            }
+        )
+    }
 }

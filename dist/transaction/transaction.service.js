@@ -98,7 +98,7 @@ let TransactionService = class TransactionService {
     async validateTransaction(transaction) {
         if (!await this.validateBalance(transaction))
             return "Insufficient Account Balance";
-        if (!await this.validateSignature(transaction.digitalSignature))
+        if (!await this.validateSignature(transaction))
             return "Unable to Validate Signature";
         return "Valid Transaction";
     }

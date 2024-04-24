@@ -5,5 +5,5 @@ export declare class BlockchainService {
     constructor(databaseService: DatabaseServiceService);
     addToBlockchain(block: any): Promise<unknown>;
     getLastBlock(): Promise<unknown>;
-    printBlockchain: () => Promise<unknown>;
+    printBlockchain: (numberOfInstances: number) => Promise<unknown>;
 }

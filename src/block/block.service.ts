@@ -12,6 +12,7 @@ import { getLocalIp } from "src/main";
 import { P2pGateway } from "src/p2p-server/p2p-server.gateway";
 
 const GENERATION_DELAY = 10000;
+const MINIMUM_TRANSACTION_PER_BLOCK = 2;
 
 @Injectable()
 export class BlockService implements OnModuleInit {
@@ -44,25 +45,27 @@ export class BlockService implements OnModuleInit {
     const node_addresses = await this.p2pClientsService.getNodeAddress();
     const node_staking_info = [];
 
-    if (valid_transactions.length < 10) {
+
+    for (const transaction of _mempool) {
+      const status = await this.transactionService.validateTransaction(transaction)
+      //console.log(status)
+      if (
+        status == "Valid Transaction"
+      ) {
+        valid_transactions.push(transaction);
+      }
+    }
+
+    if (valid_transactions.length < MINIMUM_TRANSACTION_PER_BLOCK) {
       console.log(
         "Currently " +
           valid_transactions.length +
           " number of transactions are valid."
       );
       console.log(
-        "Still " + (10 - valid_transactions.length) + " transactions needed."
+        "Still " + (MINIMUM_TRANSACTION_PER_BLOCK - valid_transactions.length) + " transactions needed."
       );
       return;
-    }
-
-    for (const transaction of _mempool) {
-      if (
-        (await this.transactionService.validateTransaction(transaction)) ==
-        "Valid Transaction"
-      ) {
-        valid_transactions.push(transaction);
-      }
     }
 
     for (let addr of node_addresses) {
@@ -83,7 +86,7 @@ export class BlockService implements OnModuleInit {
     let selectedNode = top3Nodes[randomNodeIndex];
     //console.log("Selected node info: \n", selectedNode)
 
-    if (selectedNode.addr !== getLocalIp() + ":3000") return;
+    if (selectedNode.addr !== getLocalIp() + ":3000") return; // checking
 
     //console.log("Selected Node's Public Key:", selectedNode.public_key);
 
@@ -97,11 +100,10 @@ export class BlockService implements OnModuleInit {
         validator: {
           publicKey: selectedNode.public_key,
           stakingBalance: selectedNode.staking_coin,
-          validatorSignature: "3748xutab" + selectedNode.public_key,
+          validatorSignature: selectedNode.public_key,
         },
         proofOfStake: {
           stakingReward: 2,
-          stakingDifficulty: 5000,
         },
       },
       transactions: [],
@@ -113,6 +115,8 @@ export class BlockService implements OnModuleInit {
         .update(JSON.stringify(transaction))
         .digest("hex");
       transaction.transactionHash = transactionHash;
+      transaction.block = blockWithTransactions.blockInfo.blockNumber
+      transaction.status = 'success'
       blockWithTransactions.transactions.push(transaction);
     });
 
@@ -138,7 +142,7 @@ export class BlockService implements OnModuleInit {
 
     //--------propagate
 
-    this.p2pServerGateway.blockBroadcast(blockWithTransactions);
+    //this.p2pServerGateway.blockBroadcast(blockWithTransactions);
   }
 
   // -----------------------------------------

@@ -6,4 +6,8 @@ export declare class TransactionController {
     constructor(transactionService: TransactionService);
     addTransactionToMempool(transaction: TransactionDTO): Promise<any>;
     getMempool(): Promise<mempoolDTO[]>;
+    deleteTransaction(transaction: TransactionDTO): Promise<unknown>;
+    getBalance(address: string): Promise<{
+        balance: unknown;
+    }>;
 }

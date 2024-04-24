@@ -1,9 +1,9 @@
-import { OnModuleInit } from '@nestjs/common';
-import { DatabaseServiceService } from 'src/database-service/database-service.service';
-import { TransactionService } from 'src/transaction/transaction.service';
-import { P2pClientService } from 'src/p2p-client/p2p-client.service';
-import { BlockchainService } from 'src/blockchain/blockchain.service';
-import { P2pGateway } from 'src/p2p-server/p2p-server.gateway';
+import { OnModuleInit } from "@nestjs/common";
+import { DatabaseServiceService } from "src/database-service/database-service.service";
+import { TransactionService } from "src/transaction/transaction.service";
+import { P2pClientService } from "src/p2p-client/p2p-client.service";
+import { BlockchainService } from "src/blockchain/blockchain.service";
+import { P2pGateway } from "src/p2p-server/p2p-server.gateway";
 export declare class BlockService implements OnModuleInit {
     private readonly dbService;
     private readonly transactionService;

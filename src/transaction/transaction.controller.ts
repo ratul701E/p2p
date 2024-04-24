@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Body } from '@nestjs/common';
+import { Controller, Post, Get, Body, Delete, Param } from '@nestjs/common';
 import { TransactionService } from './transaction.service';
 import { TransactionDTO } from 'src/dto/transaction.dto';
 import { promises } from 'dns';
@@ -25,6 +25,18 @@ export class TransactionController {
 
         return await this.transactionService.printMempool()
 
+    }
+
+    @Delete()
+    async deleteTransaction(@Body() transaction: TransactionDTO) {
+        return await this.transactionService.deleteTransactionFromMempool(transaction)
+    }
+
+    @Get('/balance/:address')
+    async getBalance(@Param('address') address: string) {
+        return {
+            balance: await this.transactionService.getBalance(address),
+        }
     }
 
 
