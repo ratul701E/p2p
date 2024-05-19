@@ -1,4 +1,4 @@
-import { Body, Controller, Get, ParseIntPipe, Post, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, ValidationPipe } from '@nestjs/common';
 import { BlockchainService } from './blockchain.service';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 @ApiTags("Blockchain")
@@ -72,6 +72,11 @@ export class BlockchainController {
     @Get('transaction')
     async getAllTransaction() {
         return await this.blockchainService.printAllTransaction()
+    }
+
+    @Get('block/:number?')
+    async getAllBlock(@Param('number') number: number = undefined) {
+        return await this.blockchainService.printBlockchain(number)
     }
 
     @Get('last')

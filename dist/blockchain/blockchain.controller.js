@@ -76,6 +76,9 @@ let BlockchainController = class BlockchainController {
     async getAllTransaction() {
         return await this.blockchainService.printAllTransaction();
     }
+    async getAllBlock(number = undefined) {
+        return await this.blockchainService.printBlockchain(number);
+    }
     async getLastBlock() {
         return await this.blockchainService.getLastBlock();
     }
@@ -107,6 +110,13 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], BlockchainController.prototype, "getAllTransaction", null);
+__decorate([
+    (0, common_1.Get)('block/:number?'),
+    __param(0, (0, common_1.Param)('number')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], BlockchainController.prototype, "getAllBlock", null);
 __decorate([
     (0, common_1.Get)('last'),
     __metadata("design:type", Function),
