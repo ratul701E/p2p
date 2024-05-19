@@ -20,6 +20,7 @@ const swagger_1 = require("@nestjs/swagger");
 let TransactionController = class TransactionController {
     constructor(transactionService) {
         this.transactionService = transactionService;
+        console.log("Requested");
     }
     async addTransactionToMempool(transaction) {
         return await this.transactionService.addTransactionToMempool(transaction);

@@ -45,9 +45,9 @@ let BlockchainController = class BlockchainController {
                     "status": "success",
                     "block": 1,
                     "timestamp": 1713952099817,
-                    "transactionAction": "Transfer 10 DCL value to 04e4e622e9cf3d80809b503cbe126a5468268735aa63840a4ba48979c50fbcc54320a526a421606084c450fa280e14636a1f622fd0dc3c4beb9485895da892493e",
+                    "transactionAction": "Transfer 10 DCL value to 0413c725274b4709b5faef702e0e91241eefca047a041561ce1d02e7e397fbe665de7f332c4799203770b16958f5e9989c3f11f0ae352588a75f440b891dc990b0",
                     "from": "Chain",
-                    "to": "04f50cad99720770f1d3065ae871d8d39415109c7090bb2fddcc3216b33e8b769b4b9881f3f0a862b2b97dbce3e37b4d64ba6bd4a3a5f5eef16f28ee3085107b77",
+                    "to": "0413c725274b4709b5faef702e0e91241eefca047a041561ce1d02e7e397fbe665de7f332c4799203770b16958f5e9989c3f11f0ae352588a75f440b891dc990b0",
                     "value": 100,
                     "transactionFee": 0,
                     "gasPrice": 0,
@@ -58,9 +58,9 @@ let BlockchainController = class BlockchainController {
                     "status": "success",
                     "block": 1,
                     "timestamp": 1713952099817,
-                    "transactionAction": "Transfer 10 DCL value to 04e4e622e9cf3d80809b503cbe126a5468268735aa63840a4ba48979c50fbcc54320a526a421606084c450fa280e14636a1f622fd0dc3c4beb9485895da892493e",
+                    "transactionAction": "Transfer 10 DCL value to 047e8fcefa6ad28d9b675f5d8df9c55d7fd7407cf2f3fc1da464bedb65209a1671ddf17479814eef3a2ae1e5a6409bfb0d993cde108394af71d8c050fc68fbeefc",
                     "from": "Chain",
-                    "to": "04e4e622e9cf3d80809b503cbe126a5468268735aa63840a4ba48979c50fbcc54320a526a421606084c450fa280e14636a1f622fd0dc3c4beb9485895da892493e",
+                    "to": "047e8fcefa6ad28d9b675f5d8df9c55d7fd7407cf2f3fc1da464bedb65209a1671ddf17479814eef3a2ae1e5a6409bfb0d993cde108394af71d8c050fc68fbeefc",
                     "value": 100,
                     "transactionFee": 0,
                     "gasPrice": 0,
@@ -102,7 +102,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], BlockchainController.prototype, "getTotalTransaction", null);
 __decorate([
-    (0, common_1.Get)('transactions'),
+    (0, common_1.Get)('transaction'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)

@@ -59,7 +59,7 @@ let BlockchainService = class BlockchainService {
     }
     async addToBlockchain(block) {
         return new Promise((resolve, reject) => {
-            this.blockchain.put(block.blockInfo.blockHash, JSON.stringify(block), (err) => err ? reject(err) : resolve(true));
+            this.blockchain.put(block.blockInfo.blockNumber, JSON.stringify(block), (err) => err ? reject(err) : resolve(true));
         });
     }
     async getLastBlock() {

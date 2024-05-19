@@ -25,7 +25,8 @@ async function bootstrap() {
 bootstrap();
 const getLocalIp = () => {
     const networkInterfaces = os_1.default.networkInterfaces();
-    for (const value of networkInterfaces['Wi-Fi']) {
+    console.log(networkInterfaces);
+    for (const value of networkInterfaces['wlo1']) {
         if (value.family === 'IPv4') {
             return value.address;
         }

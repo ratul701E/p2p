@@ -9,7 +9,9 @@ import { mempoolDTO } from 'src/dto/mempool.dto';
 @Controller('transaction')
 export class TransactionController {
 
-    constructor(private readonly transactionService: TransactionService) {}
+    constructor(private readonly transactionService: TransactionService) {
+        console.log("Requested")
+    }
     @ApiCreatedResponse({description:"return true and transaction will be added to mempool"})
     @ApiBadRequestResponse({description:"Return false and transaction decline"})
     @Post()
