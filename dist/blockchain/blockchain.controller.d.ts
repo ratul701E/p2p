@@ -8,4 +8,6 @@ export declare class BlockchainController {
     getAllTransaction(): Promise<any[]>;
     getAllBlock(number?: number): Promise<any>;
     getLastBlock(): Promise<unknown>;
+    getBlockByNumber(number: number): Promise<any>;
+    getBlockByHash(hash: string): Promise<any>;
 }

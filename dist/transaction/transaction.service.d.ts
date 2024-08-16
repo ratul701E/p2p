@@ -18,4 +18,6 @@ export declare class TransactionService {
     validateTransaction(transaction: any): Promise<"Insufficient Account Balance" | "Unable to Validate Signature" | "Valid Transaction">;
     getBalance(targetAddress: any): Promise<unknown>;
     validateSignature(transaction: any): Promise<boolean>;
+    getTransactionByHash(transactionHash: string): Promise<any>;
+    getAllTransactionByPublicKey(publicKey: string): Promise<any[]>;
 }

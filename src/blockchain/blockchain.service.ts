@@ -66,6 +66,61 @@ export class BlockchainService {
     
     }
 
+    getBlockByNumber = async (number: Number): Promise<any> => {
+
+        return new Promise((resolve, reject) => {
+    
+            let stream = this.blockchain.createReadStream();
+    
+            stream.on('data', (data) => {
+                const block = JSON.parse(data.value);
+                console.log(block)
+                if (block.blockInfo.blockNumber == number) {
+                    stream.destroy();
+                    resolve(block);
+                }
+            });
+    
+            stream.on('end', () => {
+                reject(new Error(`Block with number ${number} not found`));
+            });
+    
+            stream.on('error', (err) => {
+                reject(err);
+            });
+    
+        });
+    
+    }
+    
+
+    getBlockByHash = async (hash: string): Promise<any> => {
+
+        return new Promise((resolve, reject) => {
+    
+            let stream = this.blockchain.createReadStream();
+    
+            stream.on('data', (data) => {
+                const block = JSON.parse(data.value);
+                if (block.blockInfo.blockHash == hash) {
+                    stream.destroy();
+                    resolve(block);
+                }
+            });
+    
+            stream.on('end', () => {
+                reject(new Error(`Block with hash ${hash} not found`));
+            });
+    
+            stream.on('error', (err) => {
+                reject(err);
+            });
+    
+        });
+    
+    }
+    
+
     printTotalTransactionCount = async () => {
         let full_chain = await this.printBlockchain(undefined)
         let count = 0

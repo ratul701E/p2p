@@ -26,7 +26,7 @@ bootstrap();
 const getLocalIp = () => {
     const networkInterfaces = os_1.default.networkInterfaces();
     console.log(networkInterfaces);
-    for (const value of networkInterfaces['wlo1']) {
+    for (const value of networkInterfaces['en0']) {
         if (value.family === 'IPv4') {
             return value.address;
         }

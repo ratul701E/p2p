@@ -25,9 +25,6 @@ let TransactionController = class TransactionController {
     async addTransactionToMempool(transaction) {
         return await this.transactionService.addTransactionToMempool(transaction);
     }
-    async getMempool() {
-        return await this.transactionService.printMempool();
-    }
     async deleteTransaction(transaction) {
         return await this.transactionService.deleteTransactionFromMempool(transaction);
     }
@@ -35,6 +32,12 @@ let TransactionController = class TransactionController {
         return {
             balance: await this.transactionService.getBalance(address),
         };
+    }
+    async getTransactionByHash(transactionHash) {
+        return await this.transactionService.getTransactionByHash(transactionHash);
+    }
+    async getAllTransactionOfKey(key) {
+        return await this.transactionService.getAllTransactionByPublicKey(key);
     }
 };
 exports.TransactionController = TransactionController;
@@ -47,13 +50,6 @@ __decorate([
     __metadata("design:paramtypes", [transaction_dto_1.TransactionDTO]),
     __metadata("design:returntype", Promise)
 ], TransactionController.prototype, "addTransactionToMempool", null);
-__decorate([
-    (0, swagger_1.ApiOkResponse)({ description: "It will return the mempool" }),
-    (0, common_1.Get)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], TransactionController.prototype, "getMempool", null);
 __decorate([
     (0, common_1.Delete)(),
     __param(0, (0, common_1.Body)()),
@@ -68,6 +64,20 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], TransactionController.prototype, "getBalance", null);
+__decorate([
+    (0, common_1.Get)(':transactionHash'),
+    __param(0, (0, common_1.Param)('transactionHash')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], TransactionController.prototype, "getTransactionByHash", null);
+__decorate([
+    (0, common_1.Get)('key/:key'),
+    __param(0, (0, common_1.Param)('key')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], TransactionController.prototype, "getAllTransactionOfKey", null);
 exports.TransactionController = TransactionController = __decorate([
     (0, swagger_1.ApiTags)("Transaction"),
     (0, common_1.Controller)('transaction'),

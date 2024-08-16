@@ -26,8 +26,8 @@ bootstrap();
 
 export const getLocalIp = () : string => {
   const networkInterfaces = os.networkInterfaces();
-  //console.log(networkInterfaces)
-  for(const value of networkInterfaces['Wi-Fi'] ){
+  console.log(networkInterfaces)
+  for(const value of networkInterfaces['en0'] ){
     if (value.family === 'IPv4') {
       return value.address
     }

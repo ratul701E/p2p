@@ -179,4 +179,61 @@ export class TransactionService {
         }
     }
 
+    
+    async getTransactionByHash(transactionHash: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+    
+            let stream = this.blockchain.createReadStream();
+    
+            stream.on('data', (data) => {
+                const block = JSON.parse(data.value);
+                const transactions = block.transactions;
+    
+                for (let transaction of transactions) {
+                    if (transaction.transactionHash == transactionHash) {
+                        stream.destroy();
+                        resolve(transaction);
+                        return;
+                    }
+                }
+            });
+    
+            stream.on('end', () => {
+                reject(new Error(`Transaction with hash ${transactionHash} not found`));
+            });
+    
+            stream.on('error', (err) => {
+                reject(err);
+            });
+    
+        });
+    }    
+
+    async getAllTransactionByPublicKey(publicKey: string): Promise<any[]> {
+        return new Promise((resolve, reject) => {
+            let stream = this.blockchain.createReadStream();
+            let matchedTransactions: any[] = [];
+    
+            stream.on('data', (data) => {
+                const block = JSON.parse(data.value);
+                const transactions = block.transactions;
+    
+                for (let transaction of transactions) {
+                    if (transaction.from == publicKey || transaction.to == publicKey) {
+                        matchedTransactions.push(transaction);
+                    }
+                }
+            });
+    
+            stream.on('end', () => {
+                resolve(matchedTransactions);
+            });
+    
+            stream.on('error', (err) => {
+                reject(err);
+            });
+    
+        });
+    }
+    
 }

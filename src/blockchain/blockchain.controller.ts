@@ -74,7 +74,7 @@ export class BlockchainController {
         return await this.blockchainService.printAllTransaction()
     }
 
-    @Get('block/:number?')
+    @Get('blocks/:number?')
     async getAllBlock(@Param('number') number: number = undefined) {
         return await this.blockchainService.printBlockchain(number)
     }
@@ -83,4 +83,15 @@ export class BlockchainController {
     async getLastBlock() {
         return await this.blockchainService.getLastBlock()
     }
+
+    @Get("block/number/:number")
+    async getBlockByNumber(@Param('number') number: number) {
+        return await this.blockchainService.getBlockByNumber(number);
+    }
+
+    @Get("block/hash/:hash")
+    async getBlockByHash(@Param('hash') hash: string) {
+        return await this.blockchainService.getBlockByHash(hash);
+    }
+
 }

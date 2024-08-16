@@ -21,13 +21,13 @@ export class TransactionController {
 
     }
 
-    @ApiOkResponse({description:"It will return the mempool"})
-    @Get()
-    async getMempool():Promise<mempoolDTO[]> {
+    // @ApiOkResponse({description:"It will return the mempool"})
+    // @Get()
+    // async getMempool():Promise<mempoolDTO[]> {
 
-        return await this.transactionService.printMempool()
+    //     return await this.transactionService.printMempool()
 
-    }
+    //}
 
     @Delete()
     async deleteTransaction(@Body() transaction: TransactionDTO) {
@@ -41,5 +41,14 @@ export class TransactionController {
         }
     }
 
+    @Get(':transactionHash')
+    async getTransactionByHash(@Param('transactionHash') transactionHash: string){
+        return await this.transactionService.getTransactionByHash(transactionHash)
+    }
+
+    @Get('key/:key')
+    async getAllTransactionOfKey(@Param('key') key : string) {
+        return await this.transactionService.getAllTransactionByPublicKey(key)
+    }
 
 }

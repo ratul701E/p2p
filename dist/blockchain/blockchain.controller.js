@@ -82,6 +82,12 @@ let BlockchainController = class BlockchainController {
     async getLastBlock() {
         return await this.blockchainService.getLastBlock();
     }
+    async getBlockByNumber(number) {
+        return await this.blockchainService.getBlockByNumber(number);
+    }
+    async getBlockByHash(hash) {
+        return await this.blockchainService.getBlockByHash(hash);
+    }
 };
 exports.BlockchainController = BlockchainController;
 __decorate([
@@ -111,7 +117,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], BlockchainController.prototype, "getAllTransaction", null);
 __decorate([
-    (0, common_1.Get)('block/:number?'),
+    (0, common_1.Get)('blocks/:number?'),
     __param(0, (0, common_1.Param)('number')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
@@ -123,6 +129,20 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], BlockchainController.prototype, "getLastBlock", null);
+__decorate([
+    (0, common_1.Get)("block/number/:number"),
+    __param(0, (0, common_1.Param)('number')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], BlockchainController.prototype, "getBlockByNumber", null);
+__decorate([
+    (0, common_1.Get)("block/hash/:hash"),
+    __param(0, (0, common_1.Param)('hash')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], BlockchainController.prototype, "getBlockByHash", null);
 exports.BlockchainController = BlockchainController = __decorate([
     (0, swagger_1.ApiTags)("Blockchain"),
     (0, common_1.Controller)('blockchain'),
