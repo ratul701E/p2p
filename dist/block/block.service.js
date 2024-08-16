@@ -52,7 +52,7 @@ let BlockService = class BlockService {
             }
         }
         if (valid_transactions.length < MINIMUM_TRANSACTION_PER_BLOCK) {
-            console.log(`Result: Failed. Need ${MINIMUM_TRANSACTION_PER_BLOCK} valid transactions found ${valid_transactions.length}`);
+            console.log(`Result: Failed. Need ${MINIMUM_TRANSACTION_PER_BLOCK} valid transactions found ${valid_transactions.length} (Invalid: ${_mempool.length})`);
             console.log("--------------------------------------------------------");
             return;
         }
