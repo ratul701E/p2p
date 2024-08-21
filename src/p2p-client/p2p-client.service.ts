@@ -11,10 +11,15 @@ export class P2pClientService {
     private sockets: any = []
     private seed_sockets: any = []
     private readonly seed_servers: string[] = [
-      "http://192.168.165.8:4000",
-    //   "http://localhost:4001",
-    //   "http://localhost:4002",
+        "http://seed:4000"
+      //"http://localhost:4001",
+      //"http://localhost:4002",
     ]
+
+
+    constructor() {
+        //this.seed_servers.push(process.env.SEED_SERVER_ADDRESS_1 || "http://seed:4000")
+    }
 
 
     addNodeAddress(addr: string) : void {

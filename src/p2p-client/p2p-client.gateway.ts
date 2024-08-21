@@ -12,7 +12,7 @@ import { TransactionService } from 'src/transaction/transaction.service';
 export class P2pClientGateway implements OnGatewayInit {
 
   @WebSocketServer() server: Server;
-  private readonly PORT = 3000//process.argv[process.argv.indexOf("--port") + 1]
+  private readonly PORT = process.env.PORT || 3000
 
   constructor(private readonly p2pClientService: P2pClientService, private readonly transacationService: TransactionService) {}
 
@@ -32,7 +32,7 @@ export class P2pClientGateway implements OnGatewayInit {
 
       seedSocket.on('connect', async () => {
         this.p2pClientService.addSeedSocket(seedSocket)
-        //await this.getNodeAddressFromSeedServer(seedSocket)
+        await this.getNodeAddressFromSeedServer(seedSocket)
         console.log(`Connected to seed server [${JSON.stringify(seedAddr)}]`)
       })
 
