@@ -24,13 +24,20 @@ async function bootstrap() {
 
 bootstrap();
 
-export const getLocalIp = () : string => {
+export const getLocalIp = (): string => {
   const networkInterfaces = os.networkInterfaces();
-  console.log(networkInterfaces)
-  for(const value of networkInterfaces['en0'] ){
-    if (value.family === 'IPv4') {
-      return value.address
+
+  for (const interfaceName in networkInterfaces) {
+    const addresses = networkInterfaces[interfaceName];
+    
+    if (addresses) {
+      for (const addressInfo of addresses) {
+        if (addressInfo.family === 'IPv4' && !addressInfo.internal) {
+          return addressInfo.address;
+        }
+      }
     }
   }
-  return ''
-}
+
+  return ''; // Return an empty string if no IPv4 address is found
+};
