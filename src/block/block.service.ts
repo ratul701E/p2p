@@ -33,14 +33,12 @@ export class BlockService implements OnModuleInit {
     }, GENERATION_DELAY);
   }
 
-  // -------------------------------- BLOCK GENERATION --------
-
   async genereateBlock() {
-    console.log("Status: Generating block ");
+
     //console.log(await this.transactionService.printMempool())
     const _mempool: any = await this.transactionService.printMempool();
 
-    const valid_transactions: any = []; // [] ///////TODO
+    const valid_transactions: any = []; 
     const last_block: any = await this.blockchainService.getLastBlock();
     const node_addresses = await this.p2pClientsService.getNodeAddress();
     const node_staking_info = [];
@@ -48,7 +46,6 @@ export class BlockService implements OnModuleInit {
 
     for (const transaction of _mempool) {
       const status = await this.transactionService.validateTransaction(transaction)
-      //console.log(status)
       if (
         status == "Valid Transaction"
       ) {
